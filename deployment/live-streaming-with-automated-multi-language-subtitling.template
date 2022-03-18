@@ -5,7 +5,7 @@ Parameters:
   InputType:
     Description: Specify the input type for MediaLive (default parameters are for the demo video)
     Type: String
-    Default: URL_PULL
+    Default: RTMP_PUSH
     AllowedValues:
       - RTP_PUSH
       - RTMP_PUSH
@@ -32,7 +32,7 @@ Parameters:
   InputCIDR:
     Description: For RTP and RTMP PUSH input types ONLY, specify the CIDR Block for the MediaLive SecurityGroup. Input security group restricts access to the input and prevents unauthorized third parties from pushing content into a channel that is associated with that input.
     Type: String
-    Default: ""
+    Default: "0.0.0.0/0"
 
   PriPullURL:
     Description: Specify the primary source URL for the PULL input stream
@@ -65,7 +65,7 @@ Parameters:
   TranscribeLanguage:
     Description: If selecting a language other than English en-US modify the AWS Medialive channel first output caption Name Modifier from _en to the language you choose here. (Example _es for es-US Spanish) 
     Type: String
-    Default: en-US
+    Default: ja-JP
     AllowedValues:
       - en-US
       - es-US
