@@ -1182,7 +1182,7 @@ Resources:
       Handler: index.lambda_handler
       Timeout: 600
       Role: !GetAtt 'CustomDeployLambdaEdgeRole.Arn'
-      Runtime: python2.7
+      Runtime: python3.7
       Code:
         ZipFile: |
             import string
