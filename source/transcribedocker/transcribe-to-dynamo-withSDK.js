@@ -216,7 +216,7 @@ function sendResultsToDynamo(results, requestStartTime){
 				sort_starttime: sortStartTime,
 				id_session: String(requestStartTime),
 				id_pipe: ID_PIPE,
-				id_lang: "",
+				id_lang: "ja",
 				timestamp_created: timestamp,
 				timestamp_ttl: timestamp_ttl,
 
