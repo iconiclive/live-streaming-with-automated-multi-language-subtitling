@@ -23,7 +23,7 @@ def send(event, context, responseStatus, responseData, physicalResourceId=None, 
 
     responseBody = {}
     responseBody['Status'] = responseStatus
-    responseBody['Reason'] = 'See the details in CloudWatch Log Stream: ' + context.log_stream_name
+    responseBody['Reason'] = 'See the details in for function [' + context.function_name +  '], CloudWatch Log Stream: ' + context.log_stream_name
     responseBody['PhysicalResourceId'] = physicalResourceId or context.log_stream_name
     responseBody['StackId'] = event['StackId']
     responseBody['RequestId'] = event['RequestId']

@@ -15,11 +15,8 @@
 #  permissions and limitations under the License.                            #
 ##############################################################################
 
-import json
-import urllib
-import boto3
+
 import uuid
-import logging
 import lib.cfnresponse as cfn
 import lib.mediapackage as MediaPackage
 import lib.medialive as MediaLive

@@ -392,7 +392,7 @@ Resources:
       Code:
         S3Bucket: !Join ["-", [!FindInMap ["SourceCode", "General", "S3Bucket"], Ref: "AWS::Region"]]
         S3Key: !Join ["/", [!FindInMap ["SourceCode", "General", "KeyPrefix"],  "custom-resource-py.zip"]]
-      Runtime:  python3.6
+      Runtime:  python3.9
       Timeout: 180
 
 ################################################
@@ -528,18 +528,19 @@ Resources:
 ############################################
 
   ElasticLoadBalancerPipe0:
-      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-      Metadata:
-        cfn_nag:
-          rules_to_suppress:
-            - id: W52
-              reason: "ElasticLoadBalancingV2 does not have a logging option in CloudFormation."
-      Properties:
-        Type: network
-        Scheme: internet-facing
-        IpAddressType: ipv4
-        Subnets:
-          - !Ref SubnetA
+    DependsOn: GatewayAttachement
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W52
+            reason: "ElasticLoadBalancingV2 does not have a logging option in CloudFormation."
+    Properties:
+      Type: network
+      Scheme: internet-facing
+      IpAddressType: ipv4
+      Subnets:
+        - !Ref SubnetA
 
 
   ElasticLoadBalancerUDPListenerPipe0:
@@ -1076,7 +1077,7 @@ Resources:
       Handler: index.lambda_handler
       Timeout: 300
       Role: !GetAtt 'CustomResourceCloudFrontIncludeBodyExecutionRole.Arn'
-      Runtime: python3.6
+      Runtime: python3.7
       Code:
         ZipFile: |
           import string

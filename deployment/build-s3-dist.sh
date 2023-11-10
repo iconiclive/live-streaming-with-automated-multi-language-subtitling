@@ -72,12 +72,13 @@ sed -i '' -e $replace $template_dist_dir/*.template
 
 echo "------------------------------------------------------------------------------"
 echo "[Rebuild] captionlambda Function"
+echo "[Omitted] captionlambda is deprecated."
 echo "------------------------------------------------------------------------------"
-cp -r $source_dir/captionlambda $temp_dir/
-cd $temp_dir/captionlambda/
+# cp -r $source_dir/captionlambda $temp_dir/
+# cd $temp_dir/captionlambda/
 
-pip3 install -r ./requirements.txt -t . 
-zip -q -r9 $build_dist_dir/captionlambda.zip *
+# pip3 install -r ./requirements.txt -t . 
+# zip -q -r9 $build_dist_dir/captionlambda.zip *
 
 
 # Build Transcribelambda (Moving the ZIP file into the distribution directory)

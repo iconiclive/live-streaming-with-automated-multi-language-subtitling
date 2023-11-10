@@ -4,7 +4,6 @@ import time
 from boto3.dynamodb.conditions import Key, Attr
 import boto3
 from botocore.exceptions import ClientError
-import json
 import sys, linecache
 import re
 from botocore.client import Config
