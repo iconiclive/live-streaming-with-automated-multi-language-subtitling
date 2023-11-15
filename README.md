@@ -195,9 +195,10 @@ cd ./deployment
 ```
 
 ### 3. Create an Amazon S3 Bucket
-The CloudFormation template is configured to pull the Lambda deployment packages from Amazon S3 bucket in the region the template is being launched in. Create a bucket in the desired region with the region name appended to the name of the bucket. eg: for us-east-1 create a bucket named: `my-bucket-us-east-1`
+The CloudFormation template is configured to pull the Lambda deployment packages from Amazon S3 bucket. Create 2 buckets. One in the desired region with the region name as suffix, one in us-east-1, and with suffix 'us-east-1'. eg: for ap-southeast-2, create 2 buckets named: `my-bucket-ap-southeast-2` and `my-bucket-us-east-1`
 ```
 aws s3 mb s3://my-bucket-us-east-1
+aws s3 mb s3://my-bucket-ap-southeast-2
 ```
 
 ### 4. Create the deployment packages
@@ -211,8 +212,9 @@ chmod +x ./build-s3-dist.sh
 
 Deploy the distributable to the Amazon S3 bucket in your account:
 ```
+aws s3 sync ./regional-s3-assets/ s3://my-bucket-ap-southeast-2live-streaming-with-automated-multi-language-subtitling/<version>/
 aws s3 sync ./regional-s3-assets/ s3://my-bucket-us-east-1/live-streaming-with-automated-multi-language-subtitling/<version>/
-aws s3 sync ./global-s3-assets/ s3://my-bucket-us-east-1/live-streaming-with-automated-multi-language-subtitling/<version>/
+aws s3 sync ./global-s3-assets/ s3://my-bucket-ap-southeast-2/live-streaming-with-automated-multi-language-subtitling/<version>/
 ```
 
 ### 5. Launch the CloudFormation template.
