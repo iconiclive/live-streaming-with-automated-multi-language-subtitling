@@ -1,2 +1,2 @@
-## Feature update pythonb 3.8 runtime
-requests
+requests < 2.29.0
+

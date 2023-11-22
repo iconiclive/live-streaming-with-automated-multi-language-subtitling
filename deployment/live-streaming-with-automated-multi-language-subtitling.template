@@ -65,7 +65,7 @@ Parameters:
   TranscribeLanguage:
     Description: If selecting a language other than English en-US modify the AWS Medialive channel first output caption Name Modifier from _en to the language you choose here. (Example _es for es-US Spanish) 
     Type: String
-    Default: ja-JP
+    Default: en-US
     AllowedValues:
       - en-US
       - es-US
@@ -392,7 +392,7 @@ Resources:
       Code:
         S3Bucket: !Join ["-", [!FindInMap ["SourceCode", "General", "S3Bucket"], Ref: "AWS::Region"]]
         S3Key: !Join ["/", [!FindInMap ["SourceCode", "General", "KeyPrefix"],  "custom-resource-py.zip"]]
-      Runtime:  python3.6
+      Runtime:  python3.9
       Timeout: 180
 
 ################################################
@@ -528,18 +528,19 @@ Resources:
 ############################################
 
   ElasticLoadBalancerPipe0:
-      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-      Metadata:
-        cfn_nag:
-          rules_to_suppress:
-            - id: W52
-              reason: "ElasticLoadBalancingV2 does not have a logging option in CloudFormation."
-      Properties:
-        Type: network
-        Scheme: internet-facing
-        IpAddressType: ipv4
-        Subnets:
-          - !Ref SubnetA
+    DependsOn: GatewayAttachement
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W52
+            reason: "ElasticLoadBalancingV2 does not have a logging option in CloudFormation."
+    Properties:
+      Type: network
+      Scheme: internet-facing
+      IpAddressType: ipv4
+      Subnets:
+        - !Ref SubnetA
 
 
   ElasticLoadBalancerUDPListenerPipe0:
@@ -688,12 +689,12 @@ Resources:
         - IpProtocol: udp
           FromPort: 7950
           ToPort: 7950
-          CidrIp: !Sub ${MediaLiveChannel.EgressIpPipe0}/32
+          CidrIp: 0.0.0.0/0
           # 8080 TCP is for health checking for the NLB
         - IpProtocol: tcp
           FromPort: 8080
           ToPort: 8080
-          CidrIp: !Sub ${MediaLiveChannel.EgressIpPipe0}/32
+          CidrIp: 0.0.0.0/0
 
       # This was added by SolutionBuilder CFN NAGs
       SecurityGroupEgress:
@@ -1076,7 +1077,7 @@ Resources:
       Handler: index.lambda_handler
       Timeout: 300
       Role: !GetAtt 'CustomResourceCloudFrontIncludeBodyExecutionRole.Arn'
-      Runtime: python3.6
+      Runtime: python3.7
       Code:
         ZipFile: |
           import string
@@ -1229,7 +1230,7 @@ Resources:
                         # Always deploy in the us-east-1 region.
                         response = client.create_function(
                             FunctionName=name,
-                            Runtime='python3.7',
+                            Runtime='python3.9',
                             Role=role,
                             Handler='lambda_function.lambda_handler',
                             Code={

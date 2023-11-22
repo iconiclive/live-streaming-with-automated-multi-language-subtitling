@@ -1,1 +1,4 @@
 .DS_Store
+tmp
+global-s3-assets/
+regional-s3-assets/

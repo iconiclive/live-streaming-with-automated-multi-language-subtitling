@@ -1,17 +1,12 @@
-import base64
 from time import gmtime, strftime
-import time
 from boto3.dynamodb.conditions import Key, Attr
 import boto3
 from botocore.exceptions import ClientError
 from botocore.client import Config
 import json
-import sys, linecache
-import re
 import collections
 import os
 from multiprocessing.pool import ThreadPool
-from pprint import pprint
 import uuid
 
 sourceLanguage = 'en'
